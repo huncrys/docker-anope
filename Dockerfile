@@ -1,6 +1,6 @@
 FROM alpine:3.15
 
-ARG VERSION=2.0.9
+ARG VERSION=2.0.10
 ARG RUN_DEPENDENCIES=
 ARG BUILD_DEPENDENCIES=
 
@@ -30,19 +30,12 @@ RUN apk add --no-cache --virtual .build-utils gcc g++ make git cmake gnutls-dev 
     # Uninstall all unnecessary tools after build process
     apk del .build-utils && \
     rm -rf /src && \
-    # Provide a data location
-    mkdir -p /data && \
-    touch /data/anope.db && \
-    ln -s /data/anope.db /anope/data/anope.db && \
     # Make sure everything is owned by anope
-    chown -R anope /anope/ && \
-    chown -R anope /data/
+    chown -R anope /anope/
 
 RUN chown -R anope /anope/conf/
 
 WORKDIR /anope/
-
-VOLUME /data/
 
 USER anope
 
