@@ -4,8 +4,8 @@ ARG VERSION=2.0.9
 ARG RUN_DEPENDENCIES=
 ARG BUILD_DEPENDENCIES=
 
-RUN apk add --no-cache --virtual .build-utils gcc g++ make git cmake gnutls-dev sqlite-dev mariadb-dev $BUILD_DEPENDENCIES && \
-    apk add --no-cache --virtual .dependencies libgcc libstdc++ gnutls gnutls-utils sqlite-libs mariadb-client mariadb-connector-c $RUN_DEPENDENCIES && \
+RUN apk add --no-cache --virtual .build-utils gcc g++ make git cmake gnutls-dev sqlite-dev mariadb-dev pcre-dev $BUILD_DEPENDENCIES && \
+    apk add --no-cache --virtual .dependencies libgcc libstdc++ gnutls gnutls-utils sqlite-libs mariadb-client mariadb-connector-c pcre $RUN_DEPENDENCIES && \
     # Create a user to run anope later
     adduser -u 10000 -h /anope/ -D -S anope && \
     mkdir -p /src && \
@@ -14,13 +14,14 @@ RUN apk add --no-cache --virtual .build-utils gcc g++ make git cmake gnutls-dev 
     git clone --depth 1 https://github.com/anope/anope.git anope -b $VERSION && \
     cd /src/anope && \
     # Add and overwrite modules
-    ln -s /src/anope/modules/extra/m_ssl_gnutls.cpp modules && \
     ln -s /src/anope/modules/extra/m_mysql.cpp modules && \
+    ln -s /src/anope/modules/extra/m_regex_pcre.cpp modules && \
+    ln -s /src/anope/modules/extra/m_sql_authentication.cpp modules && \
+    ln -s /src/anope/modules/extra/m_sql_log.cpp modules && \
+    ln -s /src/anope/modules/extra/m_sql_oper.cpp modules && \
     ln -s /src/anope/modules/extra/m_sqlite.cpp modules && \
-    ln -s /src/anope/modules/extra/stats/cs_fantasy_stats.cpp modules && \
-    ln -s /src/anope/modules/extra/stats/cs_fantasy_top.cpp modules && \
-    ln -s /src/anope/modules/extra/stats/m_chanstats.cpp modules && \
-    ln -s /src/anope/modules/extra/stats/irc2sql modules && \
+    ln -s /src/anope/modules/extra/m_ssl_gnutls.cpp modules && \
+    ln -s /src/anope/modules/extra/stats modules && \
     mkdir build && \
     cd /src/anope/build && \
     cmake -DINSTDIR=/anope/ -DDEFUMASK=077 -DCMAKE_BUILD_TYPE=RELEASE .. && \
