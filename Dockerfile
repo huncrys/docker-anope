@@ -1,9 +1,6 @@
 FROM alpine:3.15
 
-MAINTAINER Adam adam@anope.org
-MAINTAINER Sheogorath <sheogorath@shivering-isles.com>
-
-ARG VERSION=2.0
+ARG VERSION=2.0.9
 ARG RUN_DEPENDENCIES=
 ARG BUILD_DEPENDENCIES=
 
@@ -20,6 +17,10 @@ RUN apk add --no-cache --virtual .build-utils gcc g++ make git cmake gnutls-dev 
     ln -s /src/anope/modules/extra/m_ssl_gnutls.cpp modules && \
     ln -s /src/anope/modules/extra/m_mysql.cpp modules && \
     ln -s /src/anope/modules/extra/m_sqlite.cpp modules && \
+    ln -s /src/anope/modules/extra/stats/cs_fantasy_stats.cpp modules && \
+    ln -s /src/anope/modules/extra/stats/cs_fantasy_top.cpp modules && \
+    ln -s /src/anope/modules/extra/stats/m_chanstats.cpp modules && \
+    ln -s /src/anope/modules/extra/stats/irc2sql modules && \
     mkdir build && \
     cd /src/anope/build && \
     cmake -DINSTDIR=/anope/ -DDEFUMASK=077 -DCMAKE_BUILD_TYPE=RELEASE .. && \
@@ -35,8 +36,6 @@ RUN apk add --no-cache --virtual .build-utils gcc g++ make git cmake gnutls-dev 
     # Make sure everything is owned by anope
     chown -R anope /anope/ && \
     chown -R anope /data/
-
-COPY ./conf/ /anope/conf/
 
 RUN chown -R anope /anope/conf/
 
