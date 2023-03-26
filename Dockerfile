@@ -4,7 +4,7 @@ ARG VERSION=2.0.14
 ARG RUN_DEPENDENCIES=msmtp
 ARG BUILD_DEPENDENCIES=
 
-RUN apk add --no-cache --virtual .build-utils gcc g++ make git cmake gnutls-dev sqlite-dev mariadb-dev pcre-dev $BUILD_DEPENDENCIES && \
+RUN apk add --no-cache --virtual .build-utils gcc g++ ninja git cmake gnutls-dev sqlite-dev mariadb-dev pcre-dev $BUILD_DEPENDENCIES && \
     apk add --no-cache --virtual .dependencies libgcc libstdc++ gnutls gnutls-utils sqlite-libs mariadb-client mariadb-connector-c pcre $RUN_DEPENDENCIES && \
     # Create a user to run anope later
     adduser -u 10000 -h /anope/ -D -S anope && \
@@ -24,9 +24,9 @@ RUN apk add --no-cache --virtual .build-utils gcc g++ make git cmake gnutls-dev 
     ln -s /src/anope/modules/extra/stats modules && \
     mkdir build && \
     cd /src/anope/build && \
-    cmake -DINSTDIR=/anope/ -DDEFUMASK=077 -DCMAKE_BUILD_TYPE=RELEASE .. && \
+    cmake -DINSTDIR=/anope/ -DDEFUMASK=077 -DCMAKE_BUILD_TYPE=RELEASE -GNinja .. && \
     # Run build multi-threaded
-    make -j`getconf _NPROCESSORS_ONLN` install && \
+    ninja install && \
     # Uninstall all unnecessary tools after build process
     apk del .build-utils && \
     rm -rf /src && \
