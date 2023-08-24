@@ -1,7 +1,7 @@
 FROM alpine:3.18.3
 
 ARG VERSION=2.0.14
-ARG RUN_DEPENDENCIES=
+ARG RUN_DEPENDENCIES=msmtp
 ARG BUILD_DEPENDENCIES=
 
 RUN apk add --no-cache --virtual .build-utils gcc g++ make git cmake gnutls-dev sqlite-dev mariadb-dev pcre-dev $BUILD_DEPENDENCIES && \
