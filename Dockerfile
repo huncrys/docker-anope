@@ -1,11 +1,11 @@
 FROM alpine:3.18.3
 
 ARG VERSION=2.0.14
-ARG RUN_DEPENDENCIES=msmtp
-ARG BUILD_DEPENDENCIES=
+ARG RUN_DEPENDENCIES=pcre msmtp
+ARG BUILD_DEPENDENCIES=pcre-dev
 
-RUN apk add --no-cache --virtual .build-utils gcc g++ ninja git cmake gnutls-dev sqlite-dev mariadb-dev pcre-dev $BUILD_DEPENDENCIES && \
-    apk add --no-cache --virtual .dependencies libgcc libstdc++ gnutls gnutls-utils sqlite-libs mariadb-client mariadb-connector-c pcre $RUN_DEPENDENCIES && \
+RUN apk add --no-cache --virtual .build-utils gcc g++ ninja git cmake gnutls-dev sqlite-dev mariadb-dev $BUILD_DEPENDENCIES && \
+    apk add --no-cache --virtual .dependencies libgcc libstdc++ gnutls gnutls-utils sqlite-libs mariadb-client mariadb-connector-c $RUN_DEPENDENCIES && \
     # Create a user to run anope later
     adduser -u 10000 -h /anope/ -D -S anope && \
     mkdir -p /src && \
