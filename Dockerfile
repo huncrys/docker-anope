@@ -1,6 +1,6 @@
 FROM alpine:3.18.4
 
-ARG VERSION=2.0.14
+ARG VERSION=2.1.0
 ARG RUN_DEPENDENCIES=pcre msmtp
 ARG BUILD_DEPENDENCIES=pcre-dev
 
@@ -39,4 +39,4 @@ WORKDIR /anope/
 
 USER anope
 
-CMD ["/anope/bin/services", "-n"]
+CMD ["/anope/bin/anope", "-n"]
