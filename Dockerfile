@@ -1,4 +1,4 @@
-FROM alpine:3.18.5
+FROM alpine:3.19.0
 
 ARG VERSION=2.1.0
 ARG RUN_DEPENDENCIES=pcre msmtp
