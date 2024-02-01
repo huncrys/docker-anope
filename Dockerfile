@@ -1,8 +1,8 @@
 FROM alpine:3.19.1
 
 ARG VERSION=2.1.1
-ARG RUN_DEPENDENCIES=pcre msmtp
-ARG BUILD_DEPENDENCIES=pcre-dev
+ARG RUN_DEPENDENCIES=pcre2 msmtp
+ARG BUILD_DEPENDENCIES=pcre2-dev
 
 RUN apk add --no-cache --virtual .build-utils gcc g++ ninja git cmake gnutls-dev sqlite-dev mariadb-dev $BUILD_DEPENDENCIES && \
     apk add --no-cache --virtual .dependencies libgcc libstdc++ gnutls gnutls-utils sqlite-libs mariadb-client mariadb-connector-c $RUN_DEPENDENCIES && \
@@ -15,7 +15,7 @@ RUN apk add --no-cache --virtual .build-utils gcc g++ ninja git cmake gnutls-dev
     cd /src/anope && \
     # Add and overwrite modules
     ln -s /src/anope/modules/extra/m_mysql.cpp modules && \
-    ln -s /src/anope/modules/extra/m_regex_pcre.cpp modules && \
+    ln -s /src/anope/modules/extra/m_regex_pcre2.cpp modules && \
     ln -s /src/anope/modules/extra/m_sql_authentication.cpp modules && \
     ln -s /src/anope/modules/extra/m_sql_log.cpp modules && \
     ln -s /src/anope/modules/extra/m_sql_oper.cpp modules && \
