@@ -1,6 +1,6 @@
 FROM alpine:3.19.1
 
-ARG VERSION=2.1.1
+ARG VERSION=2.1.3
 ARG RUN_DEPENDENCIES=pcre2 msmtp
 ARG BUILD_DEPENDENCIES=pcre2-dev
 
@@ -14,13 +14,13 @@ RUN apk add --no-cache --virtual .build-utils gcc g++ ninja git cmake gnutls-dev
     git clone --depth 1 https://github.com/anope/anope.git anope -b $VERSION && \
     cd /src/anope && \
     # Add and overwrite modules
-    ln -s /src/anope/modules/extra/m_mysql.cpp modules && \
-    ln -s /src/anope/modules/extra/m_regex_pcre2.cpp modules && \
-    ln -s /src/anope/modules/extra/m_sql_authentication.cpp modules && \
-    ln -s /src/anope/modules/extra/m_sql_log.cpp modules && \
-    ln -s /src/anope/modules/extra/m_sql_oper.cpp modules && \
-    ln -s /src/anope/modules/extra/m_sqlite.cpp modules && \
-    ln -s /src/anope/modules/extra/m_ssl_gnutls.cpp modules && \
+    ln -s /src/anope/modules/extra/mysql.cpp modules && \
+    ln -s /src/anope/modules/extra/regex_pcre2.cpp modules && \
+    ln -s /src/anope/modules/extra/sql_authentication.cpp modules && \
+    ln -s /src/anope/modules/extra/sql_log.cpp modules && \
+    ln -s /src/anope/modules/extra/sql_oper.cpp modules && \
+    ln -s /src/anope/modules/extra/sqlite.cpp modules && \
+    ln -s /src/anope/modules/extra/ssl_gnutls.cpp modules && \
     ln -s /src/anope/modules/extra/stats modules && \
     mkdir build && \
     cd /src/anope/build && \
