@@ -1,6 +1,6 @@
-FROM alpine:3.19.1
+FROM alpine:3.20.2
 
-ARG VERSION=2.1.3
+ARG VERSION=2.1.7
 ARG RUN_DEPENDENCIES=pcre2 msmtp
 ARG BUILD_DEPENDENCIES=pcre2-dev
 
@@ -16,12 +16,11 @@ RUN apk add --no-cache --virtual .build-utils gcc g++ ninja git cmake gnutls-dev
     # Add and overwrite modules
     ln -s /src/anope/modules/extra/mysql.cpp modules && \
     ln -s /src/anope/modules/extra/regex_pcre2.cpp modules && \
-    ln -s /src/anope/modules/extra/sql_authentication.cpp modules && \
-    ln -s /src/anope/modules/extra/sql_log.cpp modules && \
-    ln -s /src/anope/modules/extra/sql_oper.cpp modules && \
     ln -s /src/anope/modules/extra/sqlite.cpp modules && \
     ln -s /src/anope/modules/extra/ssl_gnutls.cpp modules && \
     ln -s /src/anope/modules/extra/stats modules && \
+    # Patch missing header
+    sed -i '/#include <cstdlib>/a #include <cstring>' include/services.h && \
     mkdir build && \
     cd /src/anope/build && \
     cmake -DINSTDIR=/anope/ -DDEFUMASK=077 -DCMAKE_BUILD_TYPE=RELEASE -GNinja .. && \
