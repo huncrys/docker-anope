@@ -19,8 +19,6 @@ RUN apk add --no-cache --virtual .build-utils gcc g++ ninja git cmake gettext-de
     ln -s /src/anope/modules/extra/sqlite.cpp modules && \
     ln -s /src/anope/modules/extra/ssl_gnutls.cpp modules && \
     ln -s /src/anope/modules/extra/stats modules && \
-    # Patch missing header
-    sed -i '/#include <cstdlib>/a #include <cstring>' include/services.h && \
     mkdir build && \
     cd /src/anope/build && \
     cmake -DINSTDIR=/anope/ -DDEFUMASK=077 -DCMAKE_BUILD_TYPE=RELEASE -GNinja .. && \
