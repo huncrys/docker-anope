@@ -1,6 +1,6 @@
 FROM alpine:3.22
 
-ARG VERSION=2.1.14
+ARG VERSION=2.1.15
 ARG RUN_DEPENDENCIES=pcre2 msmtp
 ARG BUILD_DEPENDENCIES=pcre2-dev
 
@@ -13,8 +13,6 @@ RUN apk add --no-cache --virtual .build-utils gcc g++ ninja git cmake gettext-de
     # Clone the requested version
     git clone --depth 1 https://github.com/anope/anope.git anope -b $VERSION && \
     cd /src/anope && \
-    # Fix MySQL deadlock issue (https://github.com/anope/anope/issues/506)
-    wget -qO - "https://github.com/anope/anope/commit/5d648f9f1cf7e23ac54317f2d63c1f9b7844de9f.patch" | git apply -v && \
     # Add and overwrite modules
     ln -s /src/anope/modules/extra/mysql.cpp modules && \
     ln -s /src/anope/modules/extra/regex_pcre2.cpp modules && \
