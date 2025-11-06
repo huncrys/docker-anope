@@ -9,5 +9,8 @@
       "matchPackageNames": ["anope/anope"],
       "ignoreUnstable": false
     }
+  ],
+  "reviewers": [
+    "crys"
   ]
 }
