@@ -5,7 +5,7 @@ FROM alpine:3.22@sha256:4b7ce07002c69e8f3d704a9c5d6fd3053be500b7f1c69fc0d80990c2
 FROM base AS builder
 
 # renovate: datasource=github-tags depName=anope/anope
-ARG ANOPE_VERSION=2.1.19
+ARG ANOPE_VERSION=2.1.20
 ARG EXTRASMODULES="regex_pcre2 ssl_gnutls sqlite mysql"
 
 RUN apk add --no-cache gcc g++ ninja git cmake gettext-dev gnutls-dev sqlite-dev mariadb-dev pcre2-dev
