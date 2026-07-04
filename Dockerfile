@@ -35,6 +35,11 @@ RUN apk add --no-cache libgcc libstdc++ libintl gnutls gnutls-utils sqlite-libs 
 
 COPY --from=builder --chown=anope:anope /anope/ /anope/
 
+# mariadb-connector-c >= 3.4 defaults to requiring TLS even when the server
+# has none configured, and the mysql module exposes no SSL option to work
+# around it, so restore the previous plaintext-by-default behaviour.
+ENV MARIADB_TLS_DISABLE_PEER_VERIFICATION=1
+
 USER anope
 
 WORKDIR /anope/
